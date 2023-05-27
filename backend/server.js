@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const path = require('path');
 
@@ -55,12 +55,13 @@ app.post("/register", async (req, res) => {
       return  res.status(400).json({message: "Email Already Exist"});
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // const salt = await bcrypt.genSalt(10);
+    // const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
       email: email,
-      password: hashedPassword,
+      // password: hashedPassword,
+      password: password
     });
 
     await newUser.save();
@@ -112,13 +113,14 @@ app.post('/login', async (req, res) => {
       if (!user) {
         return res.status(400).json({ message: 'User not found' });
       }
-    //   if (user.password !== password) {
-    //     return res.status(400).json({ message: 'Incorrect password' });
-    //   }
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-        return res.status(401).json({ message: 'Authentication failed' });
+      // "bcrypt": "^5.1.0",
+      if (user.password !== password) { 
+        return res.status(400).json({ message: 'Incorrect password' });
       }
+    // const isPasswordValid = await bcrypt.compare(password, user.password);
+    // if (!isPasswordValid) {
+    //     return res.status(401).json({ message: 'Authentication failed' });
+    //   }
       else {
       // Generate and send a token for the authenticated user
       const token = jwt.sign({ email }, "MY_SECRET_KEY", { expiresIn: '1h' });
