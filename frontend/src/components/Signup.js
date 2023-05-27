@@ -21,7 +21,7 @@ function Signup() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:8000/register", {
+      const response = await fetch("https://full-stack-app-ecom-qtwq.onrender.com/register", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

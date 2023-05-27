@@ -25,7 +25,7 @@ function ProductDetail() {
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-    const response = await axios.post('http://localhost:8000/api/checkout', {
+    const response = await axios.post('https://full-stack-app-ecom-qtwq.onrender.com/api/checkout', {
       detail: detail
     });
     console.log(response.data);
